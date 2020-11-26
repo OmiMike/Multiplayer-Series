@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        iMan.running = KeyCode.LeftShift;    
+        iMan.running = KeyCode.LeftShift;
+        iMan.crouching = KeyCode.C;
+        iMan.jump = KeyCode.Space;
     }
 
     void Update()

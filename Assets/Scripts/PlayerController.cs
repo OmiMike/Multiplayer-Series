@@ -6,12 +6,23 @@ public class PlayerController : MonoBehaviour
 {
     public InputManager inputManager;
 
-    [SerializeField] float speed;
+    [Header("Movement")]
+    [SerializeField] float speed = 1.2f;
     [SerializeField] bool holdToRun;
+    [SerializeField] bool isCrouch;
     Animator anim;
     Vector2 moveInput;
     Vector3 rootmotion;
     CharacterController cc;
+
+    [Header("Jump")]
+    [SerializeField] bool isJump;
+    [SerializeField] float stepDown;
+    [SerializeField] float jumpHeight;
+    [SerializeField] float gravity;
+    [SerializeField] float airControl;
+    [SerializeField] float jumpDampTime;
+    [SerializeField] Vector3 velocity;
 
     void Start()
     {
@@ -27,7 +38,24 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("InputX", moveInput.x); //We are setting the float from the horizontal movement
         anim.SetFloat("InputY", moveInput.y); //We are setting the float from the vertical movement
 
+        Crouch(inputManager.crouching);
         Sprinting(inputManager.running);
+
+        Vector3 speedByCharacter = new Vector3(moveInput.x, 0, moveInput.y);
+        speedByCharacter = transform.rotation * speedByCharacter;
+        cc.Move(speedByCharacter * Time.fixedDeltaTime);
+
+        cc.Move(rootmotion);
+        rootmotion = Vector3.zero;
+
+        if (isJump)
+        {
+            UpdateInAir();
+        }
+        else
+        {
+            UpdateOnGround();
+        }
     }
 
     void OnAnimatorMove()
@@ -35,10 +63,56 @@ public class PlayerController : MonoBehaviour
         rootmotion += anim.deltaPosition; //Handling rootmotion by script
     }
 
-    void FixedUpdate()
+    public void Crouch(KeyCode button)
     {
-        cc.Move(rootmotion); //Move the characters position
-        rootmotion = Vector3.zero; //Reset the rootmotion
+        if (Input.GetKeyDown(button))
+            isCrouch = !isCrouch;
+
+        if (Input.GetKeyDown(button))
+            anim.SetBool("Crouch", isCrouch);
+    }
+
+    void UpdateOnGround()
+    {
+        Vector3 stepForwardAmount = rootmotion * speed;
+        Vector3 stepDownAmount = Vector3.down * stepDown;
+
+        cc.Move(stepForwardAmount + stepDownAmount);
+        rootmotion = Vector3.zero;
+
+        Jump(inputManager.jump);
+    }
+
+    void UpdateInAir()
+    {
+        velocity.y -= gravity * Time.fixedDeltaTime;
+
+        Vector3 displacement = velocity * Time.fixedDeltaTime;
+        displacement += CalculateAirControl();
+
+        cc.Move(displacement);
+        isJump = !cc.isGrounded;
+        rootmotion = Vector3.zero;
+        //anim.SetTrigger("Jump");
+    }
+
+    Vector3 CalculateAirControl()
+    {
+        return ((transform.forward * moveInput.y) + (transform.right * moveInput.x)) * (airControl / 100);
+    }
+
+    public void Jump(KeyCode button)
+    {
+        if (Input.GetKeyDown(button))
+        {
+            if (!isJump)
+            {
+                isJump = true;
+                velocity = anim.velocity * jumpDampTime * speed;
+                velocity.y = Mathf.Sqrt(2 * gravity * jumpHeight);
+                anim.SetTrigger("Jump");
+            }
+        }
     }
 
     public void Sprinting(KeyCode button)

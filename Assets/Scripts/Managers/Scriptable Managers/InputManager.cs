@@ -6,4 +6,6 @@ using UnityEngine;
 public class InputManager : ScriptableObject
 {
     public KeyCode running;
+    public KeyCode crouching;
+    public KeyCode jump;
 }
