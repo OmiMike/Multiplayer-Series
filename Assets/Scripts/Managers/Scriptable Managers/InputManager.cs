@@ -8,4 +8,5 @@ public class InputManager : ScriptableObject
     public KeyCode running;
     public KeyCode crouching;
     public KeyCode jump;
+    public KeyCode shooting;
 }

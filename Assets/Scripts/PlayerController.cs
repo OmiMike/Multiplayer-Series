@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpDampTime;
     [SerializeField] Vector3 velocity;
 
+    [Header("Weapon")]
+    [SerializeField] Shooting weapon;
+
     void Start()
     {
         anim = GetComponent<Animator>(); //Get the Animator Component
@@ -56,6 +59,8 @@ public class PlayerController : MonoBehaviour
         {
             UpdateOnGround();
         }
+
+        FireWeapon(inputManager.shooting);
     }
 
     void OnAnimatorMove()
@@ -130,5 +135,14 @@ public class PlayerController : MonoBehaviour
             speed = 1.9f;
             anim.SetBool("Sprint", false);
         }
+    }
+
+    public void FireWeapon(KeyCode button)
+    {
+        if (Input.GetKeyDown(button))
+            weapon.StartShooting();
+
+        if (Input.GetKeyUp(button))
+            weapon.StopShooting();
     }
 }
