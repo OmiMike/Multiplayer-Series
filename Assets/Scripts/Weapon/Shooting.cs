@@ -8,6 +8,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] ParticleSystem[] muzzleFlash;
     [SerializeField] ParticleSystem hitEffects;
     [SerializeField] Transform raycastOrigin;
+    [SerializeField] Transform raycastDestination;
     Ray ray;
     RaycastHit hitInfo;
 
@@ -20,10 +21,12 @@ public class Shooting : MonoBehaviour
 
         isFiring = true;
         ray.origin = raycastOrigin.position;
-        ray.direction = raycastOrigin.forward;
+        ray.direction = raycastDestination.position - raycastOrigin.position;
         if(Physics.Raycast(ray, out hitInfo))
         {
-            Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1f);
+            hitEffects.transform.position = hitInfo.point;
+            hitEffects.transform.forward = hitInfo.normal;
+            hitEffects.Emit(1);
         }
     }
 
