@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(menuName = "Big Shot Studios/Inventory/Weapon")]
+public class Weapon : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string weaponName;
+    public GameObject weaponPrefab;
+    public float fireRate;
+    public float damage;
+    public int maxAmmo;
+    public int curAmmo;
+    public int maxClipAmount;
+    public int curClipAmount;
 }

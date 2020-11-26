@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         }
 
         FireWeapon(inputManager.shooting);
+        Reload(inputManager.reloading);
     }
 
     void OnAnimatorMove()
@@ -137,10 +138,59 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Reload(KeyCode button)
+    {
+        if (Input.GetKeyDown(button))
+        {
+            if (weapon.w.curClipAmount > 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo >= weapon.w.maxClipAmount)
+            {
+                weapon.w.curClipAmount = weapon.w.maxClipAmount;
+                weapon.w.curAmmo -= weapon.w.maxClipAmount;
+            }
+            else if (weapon.w.curClipAmount > 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo < weapon.w.maxClipAmount && weapon.w.curClipAmount != weapon.w.maxClipAmount)
+            {
+                weapon.w.curClipAmount = weapon.w.curAmmo;
+                weapon.w.curAmmo = 0;
+            }
+            else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo >= weapon.w.maxClipAmount)
+            {
+                weapon.w.curClipAmount = weapon.w.maxClipAmount;
+                weapon.w.curAmmo -= weapon.w.maxClipAmount;
+            }
+            else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo < weapon.w.maxClipAmount)
+            {
+                weapon.w.curClipAmount = weapon.w.curAmmo;
+                weapon.w.curAmmo = 0;
+            }
+            else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo <= 0)
+            {
+                weapon.w.curAmmo = 0;
+                weapon.w.curClipAmount = 0;
+                return;
+            }
+        }
+    }
+
     public void FireWeapon(KeyCode button)
     {
         if (Input.GetKeyDown(button))
-            weapon.StartShooting();
+        {
+            if(weapon.w.curClipAmount > 0)
+            {
+                weapon.StartShooting();
+            }
+            else if (weapon.w.curClipAmount <= 0)
+            {
+                weapon.w.curClipAmount = 0;
+                if(weapon.w.curAmmo <= 0)
+                {
+                    weapon.w.curAmmo = 0;
+                }
+            }
+        } 
+
+        if(weapon.isFiring)
+            weapon.UpdateFiring(Time.deltaTime);
 
         if (Input.GetKeyUp(button))
             weapon.StopShooting();

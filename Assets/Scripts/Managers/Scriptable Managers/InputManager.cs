@@ -9,4 +9,5 @@ public class InputManager : ScriptableObject
     public KeyCode crouching;
     public KeyCode jump;
     public KeyCode shooting;
+    public KeyCode reloading;
 }

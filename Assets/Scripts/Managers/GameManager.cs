@@ -12,10 +12,6 @@ public class GameManager : MonoBehaviour
         iMan.crouching = KeyCode.C;
         iMan.jump = KeyCode.Space;
         iMan.shooting = KeyCode.Mouse0;
-    }
-
-    void Update()
-    {
-        
+        iMan.reloading = KeyCode.R;
     }
 }
