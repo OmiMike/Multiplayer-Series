@@ -35,6 +35,13 @@ Hey whats up guys and gals! Big Shot Studios very own Mike here. In the repo we 
     - Raycast Shooting
     
     
+- Episode 9
+    - Changes in Mixamo Character
+    - Weapon Sounds
+    - Recoil Animation
+    - Animation Events
+    
+    
     
 ## What is to Come
 
