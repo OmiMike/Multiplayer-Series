@@ -17,7 +17,12 @@ MonoBehaviour:
     type: 3}
   fireRate: 12
   damage: 31
-  maxAmmo: 256
-  curAmmo: 256
-  maxClipAmount: 30
-  curClipAmount: 30
+  maxAmmo: 20000
+  curAmmo: 18398
+  maxClipAmount: 200
+  curClipAmount: 200
+  weaponShooting: {fileID: 8300000, guid: 1882506fdfa17474ab3bf3f5830f49fa, type: 3}
+  weaponClipEmpty: {fileID: 8300000, guid: f02f9aafba3a2cc41acf4bbe5cf8ed5e, type: 3}
+  magOut: {fileID: 8300000, guid: e9d0184a062e51644bf9b5f14a3d3de2, type: 3}
+  magIn: {fileID: 8300000, guid: 3211fbba247577b429f3879cdf3e36ad, type: 3}
+  cockWeapon: {fileID: 8300000, guid: a1084c294321ead4395b4088a04721fd, type: 3}

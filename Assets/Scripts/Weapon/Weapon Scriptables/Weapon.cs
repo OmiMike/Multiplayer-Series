@@ -13,4 +13,9 @@ public class Weapon : ScriptableObject
     public int curAmmo;
     public int maxClipAmount;
     public int curClipAmount;
+    public AudioClip weaponShooting;
+    public AudioClip weaponClipEmpty;
+    public AudioClip magOut;
+    public AudioClip magIn;
+    public AudioClip cockWeapon;
 }

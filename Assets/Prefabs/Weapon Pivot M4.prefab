@@ -102,8 +102,9 @@ GameObject:
   - component: {fileID: 4672739905723129778}
   - component: {fileID: 4672739905723129779}
   - component: {fileID: 4672739905723129805}
+  - component: {fileID: 1180193865}
   m_Layer: 0
-  m_Name: Weapon Pivot
+  m_Name: Weapon Pivot M4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,14 +117,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4672739905723129777}
-  m_LocalRotation: {x: 0.0013426611, y: -0.0016979906, z: 0.03451687, w: 0.9994018}
+  m_LocalRotation: {x: 0.0013384937, y: -0.0016965366, z: 0.034517985, w: 0.9994018}
   m_LocalPosition: {x: 0.23985326, y: 1.6061362, z: -0.0857766}
   m_LocalScale: {x: 0.5586779, y: 0.5586779, z: 0.558678}
   m_Children:
   - {fileID: 4672739906061711845}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.16000001, y: -0.18900001, z: 3.956}
 --- !u!1818360608 &4672739905723129778
 PositionConstraint:
   m_ObjectHideFlags: 0
@@ -186,7 +187,26 @@ MonoBehaviour:
   hitEffects: {fileID: 6786780257684749804}
   raycastOrigin: {fileID: 4672739905139520785}
   raycastDestination: {fileID: 0}
-  w: {fileID: 0}
+  w: {fileID: 11400000, guid: 0a7af6caa86579340aac655ed062f80a, type: 2}
+--- !u!95 &1180193865
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4672739905723129777}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ca2cf29d1ce24ef4a8c900e54dda2cb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4672739906061711850
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public InputManager inputManager;
+    [SerializeField] AudioSource weaponSounds;
 
     [Header("Movement")]
     [SerializeField] float speed = 1.2f;
@@ -26,11 +27,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] Shooting weapon;
+    [SerializeField] Animator weaponAnim;
 
     void Start()
     {
         anim = GetComponent<Animator>(); //Get the Animator Component
         cc = GetComponent<CharacterController>(); //Get the Character Controller Component
+        weaponSounds = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -99,7 +102,6 @@ public class PlayerController : MonoBehaviour
         cc.Move(displacement);
         isJump = !cc.isGrounded;
         rootmotion = Vector3.zero;
-        //anim.SetTrigger("Jump");
     }
 
     Vector3 CalculateAirControl()
@@ -146,26 +148,31 @@ public class PlayerController : MonoBehaviour
             {
                 weapon.w.curClipAmount = weapon.w.maxClipAmount;
                 weapon.w.curAmmo -= weapon.w.maxClipAmount;
+                anim.SetTrigger("Reload");
             }
             else if (weapon.w.curClipAmount > 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo < weapon.w.maxClipAmount && weapon.w.curClipAmount != weapon.w.maxClipAmount)
             {
                 weapon.w.curClipAmount = weapon.w.curAmmo;
                 weapon.w.curAmmo = 0;
+                anim.SetTrigger("Reload");
             }
             else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo >= weapon.w.maxClipAmount)
             {
                 weapon.w.curClipAmount = weapon.w.maxClipAmount;
                 weapon.w.curAmmo -= weapon.w.maxClipAmount;
+                anim.SetTrigger("Reload");
             }
             else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo > 0 && weapon.w.curAmmo < weapon.w.maxClipAmount)
             {
                 weapon.w.curClipAmount = weapon.w.curAmmo;
                 weapon.w.curAmmo = 0;
+                anim.SetTrigger("Reload");
             }
             else if (weapon.w.curClipAmount <= 0 && weapon.w.curAmmo <= 0)
             {
                 weapon.w.curAmmo = 0;
                 weapon.w.curClipAmount = 0;
+                weaponSounds.PlayOneShot(weapon.w.weaponClipEmpty, 0.7f);
                 return;
             }
         }
@@ -175,24 +182,29 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(button))
         {
-            if(weapon.w.curClipAmount > 0)
+            if (weapon.w.curClipAmount > 0)
             {
                 weapon.StartShooting();
+                weaponAnim.SetBool("Shooting", true);
             }
             else if (weapon.w.curClipAmount <= 0)
             {
+                weaponSounds.PlayOneShot(weapon.w.weaponClipEmpty, 0.7f);
                 weapon.w.curClipAmount = 0;
-                if(weapon.w.curAmmo <= 0)
+                if (weapon.w.curAmmo <= 0)
                 {
                     weapon.w.curAmmo = 0;
                 }
             }
-        } 
+        }
 
-        if(weapon.isFiring)
+        if (weapon.isFiring)
             weapon.UpdateFiring(Time.deltaTime);
 
         if (Input.GetKeyUp(button))
+        {
             weapon.StopShooting();
+            weaponAnim.SetBool("Shooting", false);
+        }
     }
 }

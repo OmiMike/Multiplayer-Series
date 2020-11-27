@@ -9,14 +9,23 @@ public class Shooting : MonoBehaviour
     [SerializeField] ParticleSystem hitEffects;
     [SerializeField] Transform raycastOrigin;
     [SerializeField] Transform raycastDestination;
+    Animator anim;
     public Weapon w;
     Ray ray;
     RaycastHit hitInfo;
     float accumulatedTime;
+    AudioSource weaponShooting;
+
+    private void Start()
+    {
+        anim = GetComponentInParent<Animator>();
+        weaponShooting = GetComponentInParent<AudioSource>();
+    }
 
     public void StartShooting()
     {
         isFiring = true;
+        anim.SetBool("Shooting", isFiring);
         accumulatedTime = 0f;
         FireWeapon();
     }
@@ -46,6 +55,7 @@ public class Shooting : MonoBehaviour
                 w.curAmmo -= 1;
                 w.curClipAmount -= 1;
                 particle.Emit(1);
+                weaponShooting.PlayOneShot(w.weaponShooting, 0.7f);
             }
         }
 
@@ -62,5 +72,6 @@ public class Shooting : MonoBehaviour
     public void StopShooting()
     {
         isFiring = false;
+        anim.SetBool("Shooting", isFiring);
     }
 }
