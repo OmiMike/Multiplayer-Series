@@ -2,6 +2,9 @@
 
 Hey whats up guys and gals! Big Shot Studios very own Mike here. In the repo we have devided everything into episodes. You can now download the project that you are stuck on.
 
+# PLEASE USE UNITY VERSION 2019.4.2F1 AND UNIVERSAL RENDER PIPELINE FOR THIS TO WORK CORRECT
+## BIG SHOT STUDIOS IS NOT LIABLE FOR ANY PROJECTS AT ANY TIME. WE WILL HELP AS SOON AS WE CAN. USE THE ISSUE TEMPLATES OR YOUR BUGS/REQUESTS WILL BE CLOSED IMMEDIATELY UPON VIEWING THEM
+
 ## What this Repo Contains
 
 - Episode 1
